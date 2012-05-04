@@ -49,7 +49,7 @@
 	 */
 	$config['sandcastle']['planet'] = array(
 		// the prefix to use on cache id's in CodeIgniters cache driver
-		'cache_prefix' 	=> '',
+		'cache_prefix' 	=> 'sc_',
 		// the number of minutes to keep the cache
 		'cache_expires' => 60
 	);

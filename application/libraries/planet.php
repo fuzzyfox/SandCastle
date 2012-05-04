@@ -50,8 +50,8 @@
 		/**
 		 * Constructor
 		 *
-		 * Gets the CodeIgniter instance, the CodeIgniter file helper, and loads
-		 * the planet configuration
+		 * Gets the CodeIgniter instance, the CodeIgniter file helper and cache
+		 * driver, and loads the planet configuration
 		 */
 		public function __construct()
 		{

@@ -136,4 +136,4 @@
 	}
 	
 /* End of file planet.php */
-/* Location: application/models/planet.php */
+/* Location: application/models/planet_model.php */
