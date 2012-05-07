@@ -193,6 +193,41 @@
 			// check for a result and return
 			return ($query->num_rows() === 1) ? $query->result() : FALSE;
 		}
+		
+		/**
+		 * Get Events Between
+		 *
+		 * Gets all events within a given date range (to be given as unix
+		 * timestamps), defaults to all events from current time till end of the
+		 * current month
+		 *
+		 * @param	int		$sdate	start of date range (defaults to current date)
+		 * @param	int		$fdate	end of date range (defaults to end of current month)
+		 * @return	mixed	database result object on success otherwise FASLE
+		 */
+		public function get_events_between($sdate = NULL, $fdate = NULL)
+		{
+			// set default timestamps if needed
+			if($sdate === NULL)
+			{
+				$sdate = mktime(0, 0, 0, date('n'), date('j'));
+			}
+			if($fdate === NULL)
+			{
+				$fdate = mktime(0, 0, 0, date('n') + 1, 0);
+			}
+			
+			// run the query (complex much!)
+			$query = $this->db->select('*')
+							->from('event')
+							->where('sdate >=', $sdate)
+							->where('fdate <=', $fdate);
+			
+			// check for results and return
+			return ($query->num_rows() > 0) ? $query->result() : FALSE;
+		}
+		
+		
 	}
 	
 /* End of file event_model.php */
