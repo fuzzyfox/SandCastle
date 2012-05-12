@@ -226,8 +226,6 @@
 			// check for results and return
 			return ($query->num_rows() > 0) ? $query->result() : FALSE;
 		}
-		
-		
 	}
 	
 /* End of file event_model.php */
