@@ -33,10 +33,7 @@
 	 *
 	 * @todo Planet Features
 	 * * add RSS 1.0 support
-	 * * add caching support for pulled feeds
-	 * * test osort function
-	 * * test class
-	 * * write testcase
+	 * * write testcases
 	 */
 	class Planet
 	{

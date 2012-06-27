@@ -16,21 +16,24 @@
 	// -------------------------------------------------------------------------
 	
 	/**
-	 * Planet Controller
+	 * Page Controller
 	 * 
-	 * Provides the needed functions to make running a basic planet a piece of
-	 * cake. This controller acts as an example of one way the Planet Library
-	 * and Planet Model can be used together to produce a functioning planet.
+	 * Provides the needed functions to make running a basic community portal a
+	 * piece of cake. This controller acts as an example of one way the Planet
+	 * Library and Planet Model can be used together to produce a functioning
+	 * planet, as well as an events listing.
 	 *
 	 * @package 	SandCastle
 	 * @subpackage 	Controllers
-	 * @category 	Planet
+	 * @category 	Portal
 	 * @author 		William Duyck <wduyck@gmail.com>
 	 * @copyright 	Copyleft 2012, William Duyck
 	 * @license 	https://www.mozilla.org/MPL/2.0/ MPL v2.0
 	 * @link 		http://www.wduyck.com/ wduyck.com
 	 *
-	 * @todo Planet Features
+	 * @todo Portal Features
+	 * * write views for all pages
+	 * * setup some uri routing within the config files
 	 */
 	class Page extends CI_Controller
 	{
@@ -45,18 +48,23 @@
 			parent::__construct();
 			
 			$this->load->library('sandcastle/planet');
-			$this->load->model('planet_model');
+			$this->load->model('sandcastle/planet_model');
+			$this->load->model('sandcastle/event_model');
 		}
 		
 		/**
-		 * Planet homepage
+		 * Portal homepage
 		 *
-		 * Links the feeds in the database with those in cache/online and
-		 * creates a page based on the collected data
+		 * Shows the needed lines of code to create a portal homepage with some
+		 * news items and events on it. No content will actually be outputed into
+		 * a template right now but this is to come.
 		 */
 		public function index()
 		{
-			$feeds = $this->get_all_feeds(FALSE);
+			// get all the feeds from the db to populate the news sidebar
+			$feeds = $this->get_all_feeds();
+			// get all the events in the coming month
+			$events = $this->event_model->get_events_between();
 		}
 		
 		/**
@@ -93,7 +101,7 @@
 				// use the planet library to get the actual feeds and cache them
 				// if needed
 				$feeds = $this->planet->get_feed($feeds);
-				if(ENVIRONMENT === 'development' && $rtn === FALSE)
+				if(ENVIRONMENT !== 'production' && $rtn === FALSE)
 				{
 					echo '<pre>';
 					print_r($feeds);

@@ -188,7 +188,8 @@
 							->from('event')
 							->join('eventTag', 'event.eventID = eventTag.eventID', 'inner')
 							->join('tag', 'tag.tagName = eventTag.tagName', 'inner')
-							->where('eventID', $event_id);
+							->where('eventID', $event_id)
+							->get();
 			
 			// check for a result and return
 			return ($query->num_rows() === 1) ? $query->result() : FALSE;
@@ -221,7 +222,8 @@
 			$query = $this->db->select('*')
 							->from('event')
 							->where('sdate >=', $sdate)
-							->where('fdate <=', $fdate);
+							->where('fdate <=', $fdate)
+							->get();
 			
 			// check for results and return
 			return ($query->num_rows() > 0) ? $query->result() : FALSE;
