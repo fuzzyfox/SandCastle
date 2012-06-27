@@ -60,7 +60,7 @@
 			// get CodeIgniter file helper
 			$this->CI->load->helper('file');
 			// get CodeIgniter cache driver
-			$this->CI->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+			$this->CI->load->driver('cache', array('adapter' => 'file', 'backup' => 'dummy'));
 			// get SandCastle config
 			$this->CI->config->load('sandcastle');
 			// get Planet config
@@ -96,18 +96,19 @@
 			{
 				foreach($url as $feed)
 				{
-					$currentFeed = $this->get_feed($feed);
+					$currentFeed = (array)$this->get_feed($feed);
 					if($currentFeed !== FALSE)
 					{
-						array_merge($this->processed_feeds, $currentFeed);
+						$this->processed_feeds = array_merge($this->processed_feeds, $currentFeed);
 					}
 				}
 				
 				if(count($this->processed_feeds) > 0)
 				{
-					$this->osort($this->processed_feeds);
+					$this->osort($this->processed_feeds, 'datetime');
 				}
-				return (count($this->processed_feeds) > 0) ? $this->processed_feeds : FALSE;
+				
+				return (count($this->processed_feeds) > 0) ? (object)$this->processed_feeds : FALSE;
 			}
 			
 			// $url was not an array determine if it is RSS 2.0, ATOM, or other
@@ -116,11 +117,11 @@
 			{
 				// feed is rss, lets check it is the supported version
 				$rssAttr = $feed->attributes();
-				if($rssAttr->version === '2.0')
+				
+				if((string)$rssAttr->version === '2.0')
 				{
 					// indeed, lets process
 					$feed = $this->process_rss($feed);
-					$this->osort($feed, 'time');
 					return $feed;
 				}
 				else
@@ -132,7 +133,6 @@
 			elseif($feed->getName() === 'feed')
 			{
 				$feed = $this->process_atom($feed);
-				$this->osort($feed, 'time');
 				return $feed;
 			}
 			else
@@ -254,7 +254,7 @@
 		}
 		
 		/**
-		 * Sorts an array object based on a specific property
+		 * Sorts an array object based on a specific property in descending order
 		 *
 		 * @param	array	&$array	the array to sort
 		 * @param	string	$prop	the property to sort by
@@ -262,7 +262,7 @@
 		private function osort(&$array, $prop)
 		{
 			usort($array, function($a, $b) use ($prop) {
-				return ($a->$prop > $b->$prop) ? 1 : -1;
+				return ($a->$prop < $b->$prop) ? 1 : -1;
 			}); 
 		}
 		

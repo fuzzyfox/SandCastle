@@ -35,7 +35,7 @@
 	 * @todo Planet Features
 	 * 
 	 */
-	class Planet_model extends Model
+	class Planet_model extends CI_Model
 	{
 		/**
 		 * Constructor

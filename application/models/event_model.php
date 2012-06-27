@@ -36,7 +36,7 @@
 	 * @todo Event Features
 	 * 
 	 */
-	class Event_model extends Model
+	class Event_model extends CI_Model
 	{
 		/**
 		 * Constructor

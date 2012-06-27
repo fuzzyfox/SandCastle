@@ -32,7 +32,7 @@
 	 *
 	 * @todo Planet Features
 	 */
-	class Planet
+	class Page extends CI_Controller
 	{
 		/**
 		 * Constructor
@@ -56,8 +56,7 @@
 		 */
 		public function index()
 		{
-			$feeds = $this->get_all_feeds();
-			
+			$feeds = $this->get_all_feeds(FALSE);
 		}
 		
 		/**
@@ -78,28 +77,35 @@
 				redirect('planet', 'location', 302);
 			}
 			
-			// something to store the list of feeds from the database in.
-			$feeds = array();
-			
 			// add all feeds into the array using the model to get the feeds
 			// from the database
-			foreach($this->planet_model->get_feeds() as $feed)
+			$dbfeeds = $this->planet_model->get_feeds();
+			if($dbfeeds)
 			{
-				array_push($feeds, $feed->feedURL);
+				// something to store the list of feeds from the database in.
+				$feeds = array();
+				
+				foreach($dbfeeds as $feed)
+				{
+					array_push($feeds, $feed->feedURL);
+				}
+				
+				// use the planet library to get the actual feeds and cache them
+				// if needed
+				$feeds = $this->planet->get_feed($feeds);
+				if(ENVIRONMENT === 'development' && $rtn === FALSE)
+				{
+					echo '<pre>';
+					print_r($feeds);
+					echo '</pre>';
+				}
+				elseif($rtn === TRUE)
+				{
+					return $feeds;
+				}
 			}
 			
-			// use the planet library to get the actual feeds and cache them if
-			// needed
-			$feeds = $this->planet->get_feed($feeds);
-			if(ENVIRONMENT === 'development' && $rtn === FALSE)
-			{
-				echo '<!doctype html><meta charset="utf8"><pre>' . print_r($feeds) . '</pre>';
-			}
-			elseif($rtn === TRUE)
-			{
-				return $feeds;
-			}
-			
+			return FALSE;
 		}
 	}
 	
