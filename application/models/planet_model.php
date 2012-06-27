@@ -100,7 +100,8 @@
 		/**
 		 * Get feeds
 		 *
-		 * Returns multiple feeds in the database, defaults to all
+		 * Returns multiple feeds details (owner, url) in the database, defaults
+		 * to all
 		 *
 		 * Usage:
 		 * 		// all feeds

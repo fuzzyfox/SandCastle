@@ -3,6 +3,7 @@ This is SandCastle, this is a collection of tools for creating a community websi
 
 ## Currently SandCastle features:
  * A basic planet implementation.
+ * A basic abstraction of an upcoming events system
 
 ## License
 ### CodeIgniter

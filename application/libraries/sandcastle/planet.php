@@ -16,7 +16,7 @@
 	// -------------------------------------------------------------------------
 	
 	/**
-	 * Planet Class
+	 * Planet Library
 	 * 
 	 * Provides the needed functions to make running a basic planet a piece of
 	 * cake.
