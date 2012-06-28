@@ -70,7 +70,7 @@
 		/**
 		 * Get all planet feeds
 		 *
-		 * gets all the planet feeds, updates the cache if needed (by virtue of
+		 * Gets all the planet feeds, updates the cache if needed (by virtue of
 		 * how the planet lib works) and acts as a cron task if the paramater is
 		 * FALSE
 		 *
@@ -95,7 +95,7 @@
 				
 				foreach($dbfeeds as $feed)
 				{
-					array_push($feeds, $feed->feedURL);
+					array_push($feeds, $feed->feed_url);
 				}
 				
 				// use the planet library to get the actual feeds and cache them
@@ -117,5 +117,5 @@
 		}
 	}
 	
-/* End of file planet.php */
-/* Location: application/libraries/planet.php */
+/* End of file page.php */
+/* Location: application/controllers/page.php */

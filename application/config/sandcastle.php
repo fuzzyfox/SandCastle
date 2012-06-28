@@ -70,4 +70,15 @@
 	 * @license 	https://www.mozilla.org/MPL/2.0/ MPL v2.0
 	 * @link 		http://www.wduyck.com/ wduyck.com
 	 */
-	$config['sandcastle']['user'] = array();
+	$config['sandcastle']['user'] = array(
+		// user statuses
+		'status'		=> array(
+			// status code => human readable
+			0 => 'admin',
+			1 => 'full access',
+			2 => 'feeds only',
+			3 => 'events only'
+		),
+		// this is used to hash user passwords.... you should probably change this
+		'secret_salt'	=> '@*FGo£Hfp9Y@PGFPO(?UP@)YFPWO:QFJU>ILOGT<'
+	);

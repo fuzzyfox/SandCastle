@@ -66,12 +66,12 @@
 		public function add_event($url, $desc, $sdate, $fdate = NULL, $tags = NULL, $tag_desc = NULL)
 		{
 			// deal with bits to go into the `event` table.
-			if(($this->db->insert('event', array(
-				'eventURL'	=> $url,
-				'eventDesc'	=> $desc,
-				'sdate'		=> $sdate,
-				'fdate'		=> $fdate
-			))) ? TRUE : FALSE)
+			if($this->db->insert('event', array(
+				'event_url'			=> $url,
+				'event_description'	=> $desc,
+				'start_date'		=> $sdate,
+				'finish_date'		=> $fdate
+			)))
 			{
 				// what to return (no errors so far)
 				$rtn = TRUE;
@@ -125,13 +125,13 @@
 			$name = strtolower($name);
 			
 			// check if the tag already exists
-			$check = $this->db->get_where('tag', array('tagName' => $name));
+			$check = $this->db->get_where('tag', array('tag_name' => $name));
 			if($check->num_rows() === 0)
 			{
 				// add the new tag in
 				return ($this->db->insert('tag', array(
-					'tagName' => $name,
-					'tagDesc' => $desc
+					'tag_name'			=> $name,
+					'tag_description'	=> $desc
 				))) ? TRUE : FALSE;
 			}
 			else
@@ -166,9 +166,9 @@
 			}
 			
 			// make a link
-			return ($this->db->insert('eventTag', array(
-				'tagName' => $tag,
-				'eventID' => $event_id
+			return ($this->db->insert('event_tag', array(
+				'tag_name' => $tag,
+				'event_id' => $event_id
 			))) ? TRUE : FALSE;
 		}
 		
@@ -186,9 +186,9 @@
 			// attempt to get the event and tags
 			$query = $this->db->select('*')
 							->from('event')
-							->join('eventTag', 'event.eventID = eventTag.eventID', 'inner')
-							->join('tag', 'tag.tagName = eventTag.tagName', 'inner')
-							->where('eventID', $event_id)
+							->join('event_tag', 'event.event_id = event_tag.event_id', 'inner')
+							->join('tag', 'tag.tag_name = eventTag.tag_name', 'inner')
+							->where('event_id', $event_id)
 							->get();
 			
 			// check for a result and return
@@ -221,8 +221,8 @@
 			// run the query (complex much!)
 			$query = $this->db->select('*')
 							->from('event')
-							->where('sdate >=', $sdate)
-							->where('fdate <=', $fdate)
+							->where('start_date >=', $sdate)
+							->where('finish_date <=', $fdate)
 							->get();
 			
 			// check for results and return
@@ -231,4 +231,4 @@
 	}
 	
 /* End of file event_model.php */
-/* Location: application/models/event_model.php */
+/* Location: application/models/sandcastle/event_model.php */

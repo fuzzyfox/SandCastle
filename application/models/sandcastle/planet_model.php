@@ -60,8 +60,8 @@
 		public function add_feed($userEmail, $feedURL)
 		{
 			return ($this->db->insert('feed', array(
-				'userEmail' => $userEmail,
-				'feedURL' 	=> $feedURL
+				'email'	=> $userEmail,
+				'feed_url'		=> $feedURL
 			))) ? TRUE : FALSE;
 		}
 		
@@ -76,7 +76,7 @@
 		public function delete_feed($feedURL)
 		{
 			return ($this->db->delete('feed', array(
-				'feedURL' => $feedURL
+				'feed_url' => $feedURL
 			))) ? TRUE : FALSE;
 		}
 		
@@ -91,7 +91,7 @@
 		public function get_feed($feedURL)
 		{
 			$feed = $this->db->get_where('feed', array(
-				'feedURL' => $feedURL
+				'feed_url' => $feedURL
 			));
 			
 			return ($feed->num_rows() === 1) ? $feed->result() : FALSE;
@@ -121,10 +121,10 @@
 			// specific feeds requested
 			if(is_array($feeds))
 			{
-				$this->db->where('feedURL', $feeds[0]);
+				$this->db->where('feed_url', $feeds[0]);
 				for($i = 1, $j = count($feeds); $i < $j; $i++)
 				{
-					$this->db->or_where('feedURL', $feeds[$i]);
+					$this->db->or_where('feed_url', $feeds[$i]);
 				}
 				$feeds = $this->db->get('feed');
 				return ($feeds->num_rows() > 0) ? $feeds->result() : FALSE;
@@ -136,5 +136,5 @@
 		}
 	}
 	
-/* End of file planet.php */
-/* Location: application/models/planet_model.php */
+/* End of file planet_model.php */
+/* Location: application/models/sandcastle/planet_model.php */
