@@ -53,10 +53,10 @@
 		 *
 		 * @param string	$user_email	The email of the user to get the status of
 		 */
-		public function get_user_status($user_email)
+		public function get_status($user_email)
 		{
 			// generate query and run it
-			$query = $this->db->select('user_status')
+			$query = $this->db->select('status')
 							  ->from('user')
 							  ->where('email', $user_email)
 							  ->get();
@@ -113,7 +113,7 @@
 		 */
 		public function update($user_email, $data)
 		{
-			return ($this->db->update('user', $data, array('user_email' => $user_email))) ? TRUE : FALSE;
+			return ($this->db->update('user', $data, array('email' => $user_email))) ? TRUE : FALSE;
 		}
 		
 		/**
@@ -124,7 +124,46 @@
 		 */
 		public function delete($user_email)
 		{
-			return ($this->db->delete('user', array('user_email' => $user_email))) ? TRUE : FALSE;
+			return ($this->db->delete('user', array('email' => $user_email))) ? TRUE : FALSE;
+		}
+		
+		/**
+		 * Gets one, or all users from the database
+		 * 
+		 * Gets one or all users from the database WITHOUT the password, but with
+		 * some additional information that is worked out from data stored
+		 *
+		 * @param	string	$user_email	The email of the single user to get [optional]
+		 * @return	mixed	database result object on success, FALSE on fail
+		 */
+		public function get($user_email = NULL)
+		{
+			// start query
+			$this->db->select('email, status, user_name')
+					 ->from('user');
+			
+			// if single user wanted then limit using WHERE clause
+			if($user_email !== NULL)
+			{
+				$this->db->where('email', $user_email);
+			}
+			
+			// get the results
+			$query = $this->db->get();
+			
+			// check some results were returned
+			if($query->num_rows() > 0)
+			{
+				foreach($query->result() as &$user)
+				{
+					$user->human_status = $this->user->get_status($user->status);
+				}
+				
+				return $query->result();
+			}
+			
+			// oops... no results... lets return false
+			return FALSE;
 		}
 	}
 	
