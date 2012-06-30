@@ -57,11 +57,11 @@
 		 * @param	string	$feedURL	the url of the feed to add
 		 * @return	boolean	TRUE on succes
 		 */
-		public function add_feed($userEmail, $feedURL)
+		public function add_feed($email, $feed_url)
 		{
 			return ($this->db->insert('feed', array(
-				'email'	=> $userEmail,
-				'feed_url'		=> $feedURL
+				'email'	=> $email,
+				'feed_url'		=> $feed_url
 			))) ? TRUE : FALSE;
 		}
 		
@@ -73,10 +73,10 @@
 		 * @param	string	$feedURL the url of the feed to delete
 		 * @return	boolean	TRUE on success
 		 */
-		public function delete_feed($feedURL)
+		public function delete_feed($feed_url)
 		{
 			return ($this->db->delete('feed', array(
-				'feed_url' => $feedURL
+				'feed_url' => $feed_url
 			))) ? TRUE : FALSE;
 		}
 		
@@ -88,10 +88,10 @@
 		 * @param	string	$feedURL	the url of the feed to get
 		 * @return	mixed	database result object on success, FALSE on fail
 		 */
-		public function get_feed($feedURL)
+		public function get_feed($feed_url)
 		{
 			$feed = $this->db->get_where('feed', array(
-				'feed_url' => $feedURL
+				'feed_url' => $feed_url
 			));
 			
 			return ($feed->num_rows() === 1) ? $feed->result() : FALSE;

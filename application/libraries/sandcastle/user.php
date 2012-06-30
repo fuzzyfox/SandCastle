@@ -75,8 +75,8 @@
 			
 			// create the user session
 			$this->CI->session->set_userdata(array(
-				'user_email'	= $user_email,
-				'user_status'	= $user_status
+				'user_email'	=> $user_email,
+				'user_status'	=> $user_status
 			));
 			
 			// redirect to the correct page

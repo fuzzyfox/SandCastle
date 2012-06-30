@@ -32,10 +32,10 @@
 	 * @license 	https://www.mozilla.org/MPL/2.0/ MPL v2.0
 	 * @link 		http://www.wduyck.com/ wduyck.com
 	 *
-	 * @todo Planet Features
+	 * @todo User Features
 	 * 
 	 */
-	class Planet_model extends CI_Model
+	class User_model extends CI_Model
 	{
 		/**
 		 * Constructor
@@ -154,12 +154,13 @@
 			// check some results were returned
 			if($query->num_rows() > 0)
 			{
-				foreach($query->result() as &$user)
+				$result = $query->result();
+				foreach($result as &$user)
 				{
 					$user->human_status = $this->user->get_status($user->status);
 				}
 				
-				return $query->result();
+				return $result;
 			}
 			
 			// oops... no results... lets return false

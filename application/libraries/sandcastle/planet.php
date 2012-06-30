@@ -108,33 +108,46 @@
 				return (count($this->processed_feeds) > 0) ? (object)$this->processed_feeds : FALSE;
 			}
 			
+			// check if the url is valid and accessible
+			if(!$this->valid_feed($url))
+			{
+				return FALSE;
+			}
+			
 			// $url was not an array determine if it is RSS 2.0, ATOM, or other
 			$feed = $this->get_simplexml($url);
 			if($feed->getName() === 'rss')
 			{
-				// feed is rss, lets check it is the supported version
-				$rssAttr = $feed->attributes();
-				
-				if((string)$rssAttr->version === '2.0')
-				{
-					// indeed, lets process
-					$feed = $this->process_rss($feed);
-					return $feed;
-				}
-				else
-				{
-					// oops, no its not, return false
-					return FALSE;
-				}
+				// indeed, lets process
+				$feed = $this->process_rss($feed);
+				return $feed;
 			}
 			elseif($feed->getName() === 'feed')
 			{
 				$feed = $this->process_atom($feed);
 				return $feed;
 			}
-			else
+		}
+		
+		/**
+		 * Get the title of a feed
+		 *
+		 * @param	string	$url	The url of the feed to get the title of
+		 * @return	mixed	Title of feed on success, FALSE if feed is invalid
+		 */
+		public function get_feed_title($url)
+		{
+			if($this->valid_feed($url))
 			{
-				return FALSE;
+				$feed = $this->get_simplexml($url);
+				if($feed->getName() === 'rss')
+				{
+					return (string)$feed->channel->title;
+				}
+				elseif($feed->getName() === 'feed')
+				{
+					return (string)$feed->title;
+				}
 			}
 		}
 		
@@ -145,6 +158,7 @@
 		 * expired from URL
 		 *
 		 * @param	string	$url	the url for the feed
+		 * @return	SimpleXMLElement	The SimpleXMLElement for the feed provided
 		 */
 		private function get_simplexml($url)
 		{
@@ -188,6 +202,7 @@
 				$result->title 		= (string)$item->title;
 				$result->link 		= (string)$item->link;
 				$result->content 	= (string)$item->description;
+				$result->feed_title	= (string)$feed->channel->title;
 				
 				// published date is not required by RSS spec
 				$result->datetime 	= (isset($item->pubDate)) ? strtotime((string)$item->pubDate) : NULL;
@@ -224,6 +239,7 @@
 				$result = new stdClass;
 				$result->datetime 	= strtotime((string)$item->updated);
 				$result->title 		= (string)$item->title;
+				$result->feed_title	= (string)$feed->title;
 				
 				// content of some form is not required by the ATOM spec
 				if(isset($item->content))
@@ -269,6 +285,49 @@
 		public function reset_instance()
 		{
 			$this->processed_feeds = array();
+		}
+		
+		/**
+		 * Validates a feed exists and checks if it is a supported version.
+		 *
+		 * @param	string	$url	The URL of the feed to check
+		 * @return	boolean	TRUE on success
+		 */
+		public function valid_feed($url)
+		{
+			// check the URL is valid before proceeding
+			if(preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url))
+			{
+				// parse the url into its components
+				$parsed_url = parse_url($url);
+				// open a socket to the url provided to check if the feed exists
+				$fhandle = fsockopen($parsed_url['host'], (isset($parsed_url['port']) ? $parsed_url['port'] : 80));
+				if($fhandle)
+				{
+					// close the open socket... don't need to keep that open
+					fclose($fhandle);
+					
+					// get the feed so we can determine if it is a supported one
+					$feed = $this->get_simplexml($url);
+					if($feed->getName() === 'rss')
+					{
+						// feed is rss, lets check it is the supported version
+						$rssAttr = $feed->attributes();
+						
+						if((string)$rssAttr->version === '2.0')
+						{
+							return TRUE;
+						}
+					}
+					elseif($feed->getName() === 'feed')
+					{
+						// feed is atom... we support this!
+						return TRUE;
+					}
+				}
+			}
+			
+			return FALSE;
 		}
 	}
 	
