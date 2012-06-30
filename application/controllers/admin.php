@@ -66,22 +66,22 @@
 			// check if user is signed in and if so send them to the admin index
 			if($this->user->is_signed_in())
 			{
-				redirect(get_class($this));
+				redirect(strtolower(get_class($this)));
 			}
 			
 			// `get_class` used so that this class can be renamed and still work
 			// decoupling the class from the uri a little more
-			$redirect_path = ($redirect_path !== NULL) ? $redirect_path : get_class($this);
+			$redirect_path = ($redirect_path !== NULL) ? $redirect_path : strtolower(get_class($this));
 			
 			// set validation rules
 			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 			$email = $this->input->post('email');
-			$this->form_validation->set_rules('password', 'Password', "required|calback__valid_sign_in[$email]");
+			$this->form_validation->set_rules('password', 'Password', "required|callback__valid_sign_in[$email]");
 			
 			// run form validation and check login credentials if form entry is valid
 			if($this->form_validation->run() === FALSE)
 			{
-				// load the sign in form
+				$this->load->view('sandcastle/form/sign_in');
 			}
 			else
 			{
@@ -99,14 +99,30 @@
 			// if user is not signed in send the to sign in page
 			if(!$this->user->is_signed_in())
 			{
-				redirect(get_class($this) . '/sign_in');
+				redirect(strtolower(get_class($this)) . '/sign_in');
 			}
 			
 			// `get_class` used so that this class can be renamed and still work
 			// decoupling the class from the uri a little more
-			$redirect_path = ($redirect_path !== NULL) ? $redirect_path : get_class($this);
+			$redirect_path = ($redirect_path !== NULL) ? $redirect_path : strtolower(get_class($this));
 			
 			$this->user->sign_out($redirect_path);
+		}
+		
+		/**
+		 * Lists all feeds in the database and provides links to add new feeds OR delete old ones
+		 */
+		public function feeds()
+		{
+			// if user is not signed in send the to sign in page
+			if(!$this->user->is_signed_in())
+			{
+				$this->sign_in(strtolower(get_class($this)) . '/feeds');
+				return;
+			}
+			
+			$data['feeds'] = $this->planet_model->get_feeds();
+			$this->load->view('sandcastle/admin/feeds', $data);
 		}
 		
 		/**
@@ -117,7 +133,8 @@
 			// if user is not signed in send the to sign in page
 			if(!$this->user->is_signed_in())
 			{
-				redirect(get_class($this) . '/sign_in');
+				$this->sign_in(strtolower(get_class($this)) . '/add_feed');
+				return;
 			}
 			
 			// set validation rules
@@ -127,40 +144,48 @@
 			// run form validation and add feed if possible
 			if($this->form_validation->run() === FALSE)
 			{
-				// load feed addition form
+				$this->load->view('sandcastle/form/add_feed');	
 			}
 			else
 			{
 				$this->planet_model->add_feed($this->input->post('email'), $this->input->post('feed_url'));
-				redirect(get_class($this) . '/feeds');
+				redirect(strtolower(get_class($this)) . '/feeds');
 			}
 		}
 		
 		/**
 		 * Allows the deletion of feeds
-		 *
-		 * @param	string	$url	The URL of the feed to remove
 		 */
-		public function delete_feed($url)
+		public function delete_feed()
 		{
 			// if user is not signed in send the to sign in page
 			if(!$this->user->is_signed_in())
 			{
-				redirect(get_class($this) . '/sign_in');
+				$this->sign_in(strtolower(get_class($this)) . '/delete_feed');
+				return;
+			}
+			
+			// get the url of the feed to remove and show error if not provided
+			$url = ($this->input->get('feed_url')) ? $this->input->get('feed_url') : $this->input->post('feed_url');
+			if(!$url)
+			{
+				show_error('No feed specified for deletion', 400, '400 Bad Request');
 			}
 			
 			// set validation rules
-			$this->form_validation->set_rules('confirm', 'Confirm', 'required');
+			$this->form_validation->set_rules('feed_url', 'Feed URL', 'required');
 			
 			// run from validation and remove feed if confrimation given
 			if($this->form_validation->run() === FALSE)
 			{
-				// load confirmation form
+				$data['feed_url'] = $url;
+				$data['feed_title'] = $this->planet->get_feed_title($url);
+				$this->load->view('sandcastle/form/delete_feed', $data);
 			}
 			else
 			{
 				$this->planet_model->delete_feed($url);
-				redirect(get_class($this) . '/feeds');
+				redirect(strtolower(get_class($this)) . '/feeds');
 			}
 		}
 		
@@ -171,8 +196,9 @@
 		 * @param	string	$password	The provided password of the user attempting to sign in
 		 * @return	boolean	TRUE if valid
 		 */
-		public function _valid_sign_in($email, $password)
+		public function _valid_sign_in($password, $email)
 		{
+			$this->form_validation->set_message('_valid_sign_in', 'Invalid sign in credentials');
 			$password_hash = $this->user->hash_password($password, $email);
 			return $this->user_model->valid_sign_in($email, $password_hash);
 		}

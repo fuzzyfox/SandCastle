@@ -82,7 +82,7 @@
 			// detect if call is from a browser and redirect to index if so
 			if(!$rtn && ENVIRONMENT !== 'development' && !$this->input->is_cli_request())
 			{
-				redirect('planet', 'location', 302);
+				redirect('planet');
 			}
 			
 			// add all feeds into the array using the model to get the feeds
@@ -114,6 +114,16 @@
 			}
 			
 			return FALSE;
+		}
+		
+		
+		/**
+		 * Displays a planet page
+		 */
+		public function planet()
+		{
+			$data['articles'] = $this->get_all_feeds();
+			$this->load->view('sandcastle/planet', $data);
 		}
 	}
 	

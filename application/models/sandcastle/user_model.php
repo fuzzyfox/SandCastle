@@ -65,7 +65,7 @@
 			if($query->num_rows() > 0)
 			{
 				$user = $query->row();
-				return $user->user_status;
+				return $user->status;
 			}
 			
 			return FALSE;

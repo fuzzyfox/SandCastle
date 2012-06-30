@@ -199,10 +199,19 @@
 			foreach($feed->channel->item as $item)
 			{
 				$result = new stdClass;
-				$result->title 		= (string)$item->title;
-				$result->link 		= (string)$item->link;
-				$result->content 	= (string)$item->description;
-				$result->feed_title	= (string)$feed->channel->title;
+				$result->title 			= (string)$item->title;
+				$result->link 			= (string)$item->link;
+				$result->feed_title		= (string)$feed->channel->title;
+				$result->full			= $item;
+				
+				if(isset($item->children('http://purl.org/rss/1.0/modules/content/')->encoded))
+				{
+					$result->content = (string)$item->children('http://purl.org/rss/1.0/modules/content/')->encoded;
+				}
+				else
+				{
+					$result->content = (string)$item->description;
+				}
 				
 				// published date is not required by RSS spec
 				$result->datetime 	= (isset($item->pubDate)) ? strtotime((string)$item->pubDate) : NULL;
@@ -240,6 +249,7 @@
 				$result->datetime 	= strtotime((string)$item->updated);
 				$result->title 		= (string)$item->title;
 				$result->feed_title	= (string)$feed->title;
+				$result->full		= $item;
 				
 				// content of some form is not required by the ATOM spec
 				if(isset($item->content))

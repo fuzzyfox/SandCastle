@@ -41,6 +41,9 @@
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 
+// sandcastle route
+$route['planet'] = 'page/planet';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

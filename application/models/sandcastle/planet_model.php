@@ -61,7 +61,7 @@
 		{
 			return ($this->db->insert('feed', array(
 				'email'	=> $email,
-				'feed_url'		=> $feed_url
+				'feed_url'		=> rtrim($feed_url, '/')
 			))) ? TRUE : FALSE;
 		}
 		
@@ -70,7 +70,7 @@
 		 *
 		 * Removes a feed from the database
 		 *
-		 * @param	string	$feedURL the url of the feed to delete
+		 * @param	string	$feed_url the url of the feed to delete
 		 * @return	boolean	TRUE on success
 		 */
 		public function delete_feed($feed_url)
