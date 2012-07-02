@@ -124,6 +124,26 @@
 		{
 			return hash('sha512', $this->config->secret_salt . $str . $salt);
 		}
+		
+		/**
+		 * Gets a human readable version of a status code
+		 *
+		 * @param	int	$status	The status code to convert
+		 * @return	string	The human readable version of the status code
+		 */
+		public function get_human_status($status)
+		{
+			return $this->config->status[$status];
+		}
+		
+		/**
+		 * Accessor method for config
+		 * @return	object	The sandcastle user management config settings
+		 */
+		public function get_config()
+		{
+			return $this->config;
+		}
 	}
 	
 /* End of file user.php */

@@ -139,7 +139,7 @@
 			
 			// set validation rules
 			$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
-			$this->form_validation->set_rules('feed_url', 'Feed URL', 'trim|required|callback__valid_feed');
+			$this->form_validation->set_rules('feed_url', 'Feed URL', 'trim|prep_url|required|callback__valid_feed');
 			
 			// run form validation and add feed if possible
 			if($this->form_validation->run() === FALSE)
@@ -186,6 +186,50 @@
 			{
 				$this->planet_model->delete_feed($url);
 				redirect(strtolower(get_class($this)) . '/feeds');
+			}
+		}
+		
+		/**
+		 * Lists all users and provides a few links to make changes as needed 
+		 */
+		public function users()
+		{
+			$data['users'] = $this->user_model->get();
+			$this->load->view('sandcastle/admin/users', $data);
+		}
+		
+		/**
+		 * Allows the addition of users
+		 */
+		public function add_user()
+		{
+			// set validation rules
+			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[user.email]');
+			$this->form_validation->set_rules('confirm_email', 'Confirm Email', 'trim|required|matches[email]');
+			$this->form_validation->set_rules('name', 'Display Name', 'trim|required');
+			$this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
+			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]');
+			$this->form_validation->set_rules('status', 'Status', 'required');
+			
+			// run form validation and add user if needed
+			if($this->form_validation->run() === FALSE)
+			{
+				$data['statuses'] = $this->user->get_config()->status;
+				$this->load->view('sandcastle/form/add_user', $data);
+			}
+			else
+			{
+				// add the user to the database
+				$data = array(
+					'name'		=> $this->input->post('name'),
+					'email'		=> $this->input->post('email'),
+					'password'	=> $this->user->hash_password($this->input->post('password'), $this->input->post('email')),
+					'status'	=> $this->input->post('status')
+				);
+				$this->user_model->insert($data);
+				
+				// redirect to users page
+				redirect(strtolower(get_class($this)) . '/users');
 			}
 		}
 		

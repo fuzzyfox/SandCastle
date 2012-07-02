@@ -138,8 +138,9 @@
 		 */
 		public function get($user_email = NULL)
 		{
+			
 			// start query
-			$this->db->select('email, status, user_name')
+			$this->db->select('email, status, name')
 					 ->from('user');
 			
 			// if single user wanted then limit using WHERE clause
@@ -155,9 +156,10 @@
 			if($query->num_rows() > 0)
 			{
 				$result = $query->result();
+				
 				foreach($result as &$user)
 				{
-					$user->human_status = $this->user->get_status($user->status);
+					$user->human_status = $this->user->get_human_status($user->status);
 				}
 				
 				return $result;
