@@ -194,6 +194,13 @@
 		 */
 		public function users()
 		{
+			// if user is not signed in send the to sign in page
+			if(!$this->user->is_signed_in())
+			{
+				$this->sign_in(strtolower(get_class($this)) . '/users');
+				return;
+			}
+			
 			$data['users'] = $this->user_model->get();
 			$this->load->view('sandcastle/admin/users', $data);
 		}
@@ -203,6 +210,13 @@
 		 */
 		public function add_user()
 		{
+			// if user is not signed in send the to sign in page
+			if(!$this->user->is_signed_in())
+			{
+				$this->sign_in(strtolower(get_class($this)) . '/add_user');
+				return;
+			}
+			
 			// set validation rules
 			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[user.email]');
 			$this->form_validation->set_rules('confirm_email', 'Confirm Email', 'trim|required|matches[email]');
@@ -234,6 +248,94 @@
 		}
 		
 		/**
+		 * Deletes a user after confirmation
+		 */
+		public function delete_user()
+		{
+			// if user is not signed in send the to sign in page
+			if(!$this->user->is_signed_in())
+			{
+				$this->sign_in(strtolower(get_class($this)) . '/delete_user');
+				return;
+			}
+			
+			// get the email of the user to remove and show error if not provided
+			$user = ($this->input->get('email')) ? $this->input->get('email') : $this->input->post('email');
+			if(!$user)
+			{
+				show_error('No user specified for deletion', 400, '400 Bad Request');
+			}
+			
+			// set validation rules
+			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|callback__user_exists');
+			
+			// run validation and delete user if needed
+			if($this->form_validation->run() === FALSE)
+			{
+				$user = $this->user_model->get($user);
+				$data['user'] = $user[0];
+				$this->load->view('sandcastle/form/delete_user', $data);
+			}
+			else
+			{
+				$this->user_model->delete($user);
+				redirect(strtolower(get_class($this)) . '/users');
+			}
+		}
+		
+		/**
+		 * Allows for the modification of users
+		 */
+		public function edit_user()
+		{
+			// if user is not signed in send the to sign in page
+			if(!$this->user->is_signed_in())
+			{
+				$this->sign_in(strtolower(get_class($this)) . '/edit_user');
+				return;
+			}
+			
+			// get the email of the user to remove and show error if not provided
+			$user = ($this->input->get('email')) ? $this->input->get('email') : $this->input->post('email');
+			if(!$user)
+			{
+				show_error('No user specified for modification', 400, '400 Bad Request');
+			}
+			
+			// set validation rules
+			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+			$this->form_validation->set_rules('confirm_email', 'Confirm Email', 'trim|required|matches[email]');
+			$this->form_validation->set_rules('name', 'Display Name', 'trim');
+			$this->form_validation->set_rules('status', 'Status', 'required');
+			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'matches[password]');
+			
+			// run validation and delete user if needed
+			if($this->form_validation->run() === FALSE)
+			{
+				$user = $this->user_model->get($user);
+				$data['user'] = $user[0];
+				$data['statuses'] = $this->user->get_config()->status;
+				$this->load->view('sandcastle/form/edit_user', $data);
+			}
+			else
+			{
+				$data = array(
+					'name'		=> $this->input->post('name'),
+					'status'	=> $this->input->post('status'),
+					'email'		=> $this->input->post('email')
+				);
+				
+				if($this->input->post('password'))
+				{
+					$data['password'] = $this->user->hash_password($this->input->post('password'), $this->input->post('email'));
+				}
+				
+				$this->user_model->update($user, $data);
+				redirect(strtolower(get_class($this)) . '/users');
+			}
+		}
+		
+		/**
 		 * Checks if a sign in is valid
 		 *
 		 * @param	string	$email		The provided email of the user attempting to sign in
@@ -257,6 +359,19 @@
 		{
 			$this->form_validation->set_message('_valid_feed', 'There is an error with the feed at %s. Is the url valid? Is the feed online? Is the feed RSS 2.0 or ATOM?');
 			return $this->planet->valid_feed($url);
+		}
+		
+		/**
+		 * Determines if a user exists within the database
+		 *
+		 * @param	string	The email of the user to check for
+		 * @return	boolean	TRUE if user exists
+		 */
+		public function _user_exists($email)
+		{
+			$this->form_validation->set_message('_user_exists', 'The user %s does not exist');
+			$query = $this->db->get_where('user', array('email' => $email));
+			return ($query->num_rows() === 1);
 		}
 	}
 	
