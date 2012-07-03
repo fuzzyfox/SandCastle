@@ -1,3 +1,6 @@
+<!doctype html>
+<meta charset="utf-8">
+<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
 <?php echo validation_errors(); ?>
 <?php echo form_open(); ?>
 	<fieldset>

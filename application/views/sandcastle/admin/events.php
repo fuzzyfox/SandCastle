@@ -1,3 +1,6 @@
+<!doctype html>
+<meta charset="utf-8">
+<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
 <table>
 	<thead>
 		<tr>
@@ -16,8 +19,8 @@
 			<td><?php echo $event->event_name; ?></td>
 			<td><?php echo $event->event_url; ?></td>
 			<td><?php echo $event->event_description; ?></td>
-			<td><?php echo date('l, dS F, Y', $event->start_date); ?></td>
-			<td><?php echo date('l, dS F, Y', $event->finish_date); ?></td>
+			<td><?php echo date('l, jS F, Y', $event->start_date); ?></td>
+			<td><?php echo date('l, jS F, Y', $event->finish_date); ?></td>
 			<td>
 				<?php
 					$tags = array();
