@@ -53,7 +53,21 @@
 			// load sandcastle components needed over and over
 			$this->load->library(array('sandcastle/user', 'sandcastle/planet'));
 			$this->load->model(array('sandcastle/user_model', 'sandcastle/planet_model', 'sandcastle/event_model'));
+		}
+		
+		/**
+		 * Provides a dashboard for the admin area
+		 */
+		public function index()
+		{
+			// if user is not signed in send the to sign in page
+			if(!$this->user->is_signed_in())
+			{
+				$this->sign_in(strtolower(get_class($this)) . '');
+				return;
+			}
 			
+			$this->load->view('sandcastle/admin/index');
 		}
 		
 		/**
@@ -336,6 +350,126 @@
 		}
 		
 		/**
+		 * Lists events
+		 */
+		public function events()
+		{
+			if(!$this->user->is_signed_in())
+			{
+				$this->sign_in(strtolower(get_class($this)) . '/events');
+				return;
+			}
+			
+			$data['events'] = $this->event_model->get_event();
+			$this->load->view('sandcastle/admin/events', $data);
+		}
+		
+		/**
+		 * Allows users to add events
+		 */
+		public function add_event()
+		{
+			if(!$this->user->is_signed_in())
+			{
+				$this->sign_in(strtolower(get_class($this)) . '/add_event');
+				return;
+			}
+			
+			// set validation rules
+			$this->form_validation->set_rules('url', 'Event URL', 'trim|prep_url|required');
+			$this->form_validation->set_rules('name', 'Event Name', 'trim|max_length[40]|required');
+			$this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[300]');
+			$this->form_validation->set_rules('start_date', 'Start Date', 'trim|required|callback__valid_date_format');
+			$start_date = $this->input->post('start_date');
+			$this->form_validation->set_rules('finish_date', 'Finish Date', "trim|callback__valid_date_format|callback__valid_finish_date[$start_date]");
+			
+			// run form validation and add event / tags if needed
+			if($this->form_validation->run() === FALSE)
+			{
+				$this->load->view('sandcastle/form/add_event');
+			}
+			else
+			{
+				// deal with tags
+				if(($this->input->post('tags') !== FALSE) && preg_match('/,/', $this->input->post('tags')))
+				{
+					$tags = explode(',', $this->input->post('tags'));
+					foreach($tags as &$tag)
+					{
+						$tag = strtolower(trim($tag));
+						if($tag === '')
+						{
+							unset($tag);
+						}
+					}
+				}
+				elseif($this->input->post('tags') !== FALSE)
+				{
+					$tags = $this->input->post('tags');
+				}
+				else
+				{
+					$tags = NULL;
+				}
+				
+				// load the CodeIgniter date helper
+				$this->load->helper('date');
+				
+				// deal with finish date
+				$finsih_date = ($this->input->post('finish_date') !== FALSE) ? strtotime($this->input->post('finish_date')) : NULL;
+				
+				// deal with start date
+				$start_date = strtotime($this->input->post('start_date'));
+				
+				// add event
+				$this->event_model->add_event($this->input->post('url'),
+											  $this->input->post('name'),
+											  $this->input->post('description'),
+											  $start_date,
+											  $finsih_date,
+											  $tags);
+				
+				// redirect back
+				redirect(strtolower(get_class($this)) . '/events');
+			}
+		}
+		
+		/**
+		 * Allows user to delete events
+		 */
+		public function delete_event($id = FALSE)
+		{
+			// if user is not signed in send the to sign in page
+			if(!$this->user->is_signed_in())
+			{
+				$this->sign_in(strtolower(get_class($this)) . '/delete_event/' . $id);
+				return;
+			}
+			
+			// check the id of the event to delete was specified
+			if($id === FALSE)
+			{
+				show_error('No event specified for deletion', 400, '400 Bad Request');
+			}
+			
+			// set validation rules
+			$this->form_validation->set_rules('event_id', 'event_id', 'trim|required');
+			
+			// run validation and delete user if needed
+			if($this->form_validation->run() === FALSE)
+			{
+				$event = $this->event_model->get_event($id);
+				$data['event'] = $event[0];
+				$this->load->view('sandcastle/form/delete_event', $data);
+			}
+			else
+			{
+				$this->db->delete('event', array('event_id' => $this->input->post('event_id')));
+				redirect(strtolower(get_class($this)) . '/events');
+			}
+		}
+		
+		/**
 		 * Checks if a sign in is valid
 		 *
 		 * @param	string	$email		The provided email of the user attempting to sign in
@@ -364,7 +498,7 @@
 		/**
 		 * Determines if a user exists within the database
 		 *
-		 * @param	string	The email of the user to check for
+		 * @param	string	$email	The email of the user to check for
 		 * @return	boolean	TRUE if user exists
 		 */
 		public function _user_exists($email)
@@ -372,6 +506,35 @@
 			$this->form_validation->set_message('_user_exists', 'The user %s does not exist');
 			$query = $this->db->get_where('user', array('email' => $email));
 			return ($query->num_rows() === 1);
+		}
+		
+		/**
+		 * Checks if the date format submitted by the user is valid
+		 *
+		 * @param	string	$date	The string to check
+		 * @return	boolean	TRUE if valid
+		 */
+		public function _valid_date_format($date)
+		{
+			$this->form_validation->set_message('_valid_date_format', 'Date format not recognised. Please enter in the following format yyyy-mm-dd');
+			//return preg_match('/\d\d\d\d(\/|-|\.)\d{1,2}(\/|-)\d{1,2}/i', $string);
+			$this->load->helper('date');
+			return (strtotime($date) !== FALSE) ? TRUE : FALSE;
+		}
+		
+		/**
+		 * Checks if one date is bigger than the other
+		 *
+		 * @param	string	$after	The second date
+		 * @param	string	$before	The first date (this should be before the previous chronologically)
+		 * @return	boolean	TRUE if second date is after first
+		 */
+		public function _valid_finish_date($after, $before)
+		{
+			// load the CodeIgniter date helper
+			$this->load->helper('date');
+			// do the comparison
+			return (strtotime($after) > strtotime($before));
 		}
 	}
 	

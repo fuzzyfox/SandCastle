@@ -60,8 +60,8 @@
 		public function add_feed($email, $feed_url)
 		{
 			return ($this->db->insert('feed', array(
-				'email'	=> $email,
-				'feed_url'		=> rtrim($feed_url, '/')
+				'email'		=> $email,
+				'feed_url'	=> rtrim($feed_url, '/')
 			))) ? TRUE : FALSE;
 		}
 		

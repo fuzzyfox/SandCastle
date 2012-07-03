@@ -59,15 +59,16 @@
 		 * @param	string	$desc		a description of the event to be displayed.
 		 * @param	int		$sdate		the start date for the event.
 		 * @param	int		$fdate		the finish date for the event.
-		 * @param	mixed	$tags		either a string for one tag, or assoc_array for multiple.
+		 * @param	mixed	$tags		either a string for one tag, or array for multiple.
 		 * @param	string	$tag_desc	if prev' is string this is used to 
 		 * @return	boolean	TRUE on success
 		 */
-		public function add_event($url, $desc, $sdate, $fdate = NULL, $tags = NULL, $tag_desc = NULL)
+		public function add_event($url, $name, $desc, $sdate, $fdate = NULL, $tags = NULL, $tag_desc = NULL)
 		{
 			// deal with bits to go into the `event` table.
 			if($this->db->insert('event', array(
 				'event_url'			=> $url,
+				'event_name'		=> $name,
 				'event_description'	=> $desc,
 				'start_date'		=> $sdate,
 				'finish_date'		=> $fdate
@@ -85,11 +86,10 @@
 					unset($desc);
 					
 					// loop through all tags and add them to the database
-					foreach($tags as $tag => $desc)
+					foreach($tags as $tag)
 					{
-						$desc = (isset($desc)) ? $desc : NULL;
 						// if a tag couldn't be added for some reason return FALSE
-						$rtn = ($this->add_tag($tag, $desc)) ? $rtn : FALSE;
+						$rtn = ($this->add_tag($tag)) ? $rtn : FALSE;
 						// if a tag couldn't be linked for some reason return FALSE
 						$rtn = ($this->tag_event($tag, $event_id)) ? $rtn : FALSE;
 					}
@@ -178,21 +178,59 @@
 		 * Gets a single event (and assoc' tags) based on the events ID and
 		 * returns a database result object.
 		 *
-		 * @param	int		$event_id	id of the event to get
-		 * @return	mixed	database result object on success, otherwise FALSE
+		 * @param	mixed	$event_id	id of the event to get or NULL for all events
+		 * @return	mixed	a modified database result object on success, otherwise FALSE
 		 */
-		public function get_event($event_id)
+		public function get_event($event_id = NULL)
 		{
 			// attempt to get the event and tags
-			$query = $this->db->select('*')
-							->from('event')
-							->join('event_tag', 'event.event_id = event_tag.event_id', 'inner')
-							->join('tag', 'tag.tag_name = eventTag.tag_name', 'inner')
-							->where('event_id', $event_id)
-							->get();
+			$this->db->select('*')
+					 ->from('event');
 			
-			// check for a result and return
-			return ($query->num_rows() === 1) ? $query->result() : FALSE;
+			// do we need to resetrict results to one event?
+			if($event_id !== NULL)
+			{
+				$this->db->where('event.event_id', $event_id);
+			}
+			
+			// get results
+			$query = $this->db->get();
+			
+			// check for results before getting tags
+			if($query->num_rows() > 0)
+			{
+				$events = $query->result();
+				
+				foreach($events as $event)
+				{
+					$event->tags = $this->get_tags($event->event_id);
+				}
+				
+				return $events;
+			}
+			
+			return FALSE;
+		}
+		
+		/**
+		 * Get Tags for Event
+		 *
+		 * Gets all the tags related to a particular event
+		 *
+		 * @param	int	$event_id	The id of the event to get the tags for
+		 * @return	mixed	database result object on success otherwise FALSE
+		 */
+		public function get_tags($event_id)
+		{
+			// run the query
+			$query = $this->db->select('tag.tag_name, tag_description')
+							  ->from('tag')
+							  ->join('event_tag', 'event_tag.tag_name = tag.tag_name', 'inner')
+							  ->where('event_tag.event_id', $event_id)
+							  ->get();
+			
+			// check for results and return
+			return ($query->num_rows() > 0) ? $query->result() : FALSE;
 		}
 		
 		/**
@@ -204,7 +242,7 @@
 		 *
 		 * @param	int		$sdate	start of date range (defaults to current date)
 		 * @param	int		$fdate	end of date range (defaults to end of current month)
-		 * @return	mixed	database result object on success otherwise FASLE
+		 * @return	mixed	a modified database result object on success otherwise FASLE
 		 */
 		public function get_events_between($sdate = NULL, $fdate = NULL)
 		{
@@ -225,8 +263,20 @@
 							->where('finish_date <=', $fdate)
 							->get();
 			
-			// check for results and return
-			return ($query->num_rows() > 0) ? $query->result() : FALSE;
+			// check for results before getting tags
+			if($query->num_rows() > 0)
+			{
+				$events = $query->result();
+				
+				foreach($events as $event)
+				{
+					$event->tags = $this->get_tags($event->event_id);
+				}
+				
+				return $events;
+			}
+			
+			return FALSE;
 		}
 	}
 	
