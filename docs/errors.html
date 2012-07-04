@@ -33,10 +33,10 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">964</span></a></li>
+                <span class="label label-info">980</span></a></li>
 <li><a href="markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul><li>todo 
-                <span class="label label-info">6</span>
+                <span class="label label-info">8</span>
 </li></ul></a></li>
 <li><a href="deprecated.html"><i class="icon-stop"></i> Deprecated elements 
                 <span class="label label-info">0</span></a></li>
@@ -73,6 +73,7 @@
 <li><a href="#application/config/routes.php"><i class="icon-file"></i>application/config/routes.php</a></li>
 <li><a href="#application/config/smileys.php"><i class="icon-file"></i>application/config/smileys.php</a></li>
 <li><a href="#application/config/user_agents.php"><i class="icon-file"></i>application/config/user_agents.php</a></li>
+<li><a href="#application/controllers/admin.php"><i class="icon-file"></i>application/controllers/admin.php</a></li>
 <li><a href="#application/controllers/welcome.php"><i class="icon-file"></i>application/controllers/welcome.php</a></li>
 <li><a href="#application/errors/error_404.php"><i class="icon-file"></i>application/errors/error_404.php</a></li>
 <li><a href="#application/errors/error_db.php"><i class="icon-file"></i>application/errors/error_db.php</a></li>
@@ -81,6 +82,20 @@
 <li><a href="#application/libraries/sandcastle/planet.php"><i class="icon-file"></i>application/libraries/sandcastle/planet.php</a></li>
 <li><a href="#application/libraries/sandcastle/user.php"><i class="icon-file"></i>application/libraries/sandcastle/user.php</a></li>
 <li><a href="#application/models/sandcastle/event_model.php"><i class="icon-file"></i>application/models/sandcastle/event_model.php</a></li>
+<li><a href="#application/models/sandcastle/planet_model.php"><i class="icon-file"></i>application/models/sandcastle/planet_model.php</a></li>
+<li><a href="#application/views/sandcastle/admin/events.php"><i class="icon-file"></i>application/views/sandcastle/admin/events.php</a></li>
+<li><a href="#application/views/sandcastle/admin/feeds.php"><i class="icon-file"></i>application/views/sandcastle/admin/feeds.php</a></li>
+<li><a href="#application/views/sandcastle/admin/index.php"><i class="icon-file"></i>application/views/sandcastle/admin/index.php</a></li>
+<li><a href="#application/views/sandcastle/admin/users.php"><i class="icon-file"></i>application/views/sandcastle/admin/users.php</a></li>
+<li><a href="#application/views/sandcastle/form/add_event.php"><i class="icon-file"></i>application/views/sandcastle/form/add_event.php</a></li>
+<li><a href="#application/views/sandcastle/form/add_feed.php"><i class="icon-file"></i>application/views/sandcastle/form/add_feed.php</a></li>
+<li><a href="#application/views/sandcastle/form/add_user.php"><i class="icon-file"></i>application/views/sandcastle/form/add_user.php</a></li>
+<li><a href="#application/views/sandcastle/form/delete_event.php"><i class="icon-file"></i>application/views/sandcastle/form/delete_event.php</a></li>
+<li><a href="#application/views/sandcastle/form/delete_feed.php"><i class="icon-file"></i>application/views/sandcastle/form/delete_feed.php</a></li>
+<li><a href="#application/views/sandcastle/form/delete_user.php"><i class="icon-file"></i>application/views/sandcastle/form/delete_user.php</a></li>
+<li><a href="#application/views/sandcastle/form/edit_user.php"><i class="icon-file"></i>application/views/sandcastle/form/edit_user.php</a></li>
+<li><a href="#application/views/sandcastle/form/sign_in.php"><i class="icon-file"></i>application/views/sandcastle/form/sign_in.php</a></li>
+<li><a href="#application/views/sandcastle/planet.php"><i class="icon-file"></i>application/views/sandcastle/planet.php</a></li>
 <li><a href="#application/views/welcome_message.php"><i class="icon-file"></i>application/views/welcome_message.php</a></li>
 <li><a href="#index.php"><i class="icon-file"></i>index.php</a></li>
 <li><a href="#system/core/CodeIgniter.php"><i class="icon-file"></i>system/core/CodeIgniter.php</a></li>
@@ -455,6 +470,35 @@
 </tr></tbody>
 </table></div>
 </div>
+<div class="package-contents">
+<a name="application/controllers/admin.php" id="application/controllers/admin.php"></a><h3>
+<i class="icon-file"></i>application/controllers/admin.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>437</td>
+<td>Argument $id is missing from the Docblock of delete_event()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>472</td>
+<td>Name of argument $password does not match with the DocBlock's name $email in _valid_sign_in()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>472</td>
+<td>Name of argument $email does not match with the DocBlock's name $password in _valid_sign_in()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
 <div class="package-contents"></div>
 <div class="package-contents">
 <a name="application/controllers/welcome.php" id="application/controllers/welcome.php"></a><h3>
@@ -590,12 +634,12 @@
 <tbody>
 <tr class="critical">
 <td>critical</td>
-<td>43</td>
+<td>36</td>
 <td>No short description for property $CI</td>
 </tr>
 <tr class="critical">
 <td>critical</td>
-<td>45</td>
+<td>38</td>
 <td>No short description for property $config</td>
 </tr>
 </tbody>
@@ -603,7 +647,7 @@
 </div>
 <div class="package-contents">
 <a name="application/models/sandcastle/event_model.php" id="application/models/sandcastle/event_model.php"></a><h3>
-<i class="icon-file"></i>application/models/sandcastle/event_model.php<small style="float: right;padding-right: 10px;">8</small>
+<i class="icon-file"></i>application/models/sandcastle/event_model.php<small style="float: right;padding-right: 10px;">2</small>
 </h3>
 <div><table class="table markers table-bordered">
 <thead><tr>
@@ -612,36 +656,6 @@
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="error">
-<td>error</td>
-<td>52</td>
-<td>Name of argument $desc does not match with the DocBlock's name $name in add_event()</td>
-</tr>
-<tr class="error">
-<td>error</td>
-<td>52</td>
-<td>Name of argument $sdate does not match with the DocBlock's name $desc in add_event()</td>
-</tr>
-<tr class="error">
-<td>error</td>
-<td>52</td>
-<td>Name of argument $fdate does not match with the DocBlock's name $sdate in add_event()</td>
-</tr>
-<tr class="error">
-<td>error</td>
-<td>52</td>
-<td>Name of argument $tags does not match with the DocBlock's name $fdate in add_event()</td>
-</tr>
-<tr class="error">
-<td>error</td>
-<td>52</td>
-<td>Name of argument $tag_desc does not match with the DocBlock's name $tags in add_event()</td>
-</tr>
-<tr class="notice">
-<td>notice</td>
-<td>52</td>
-<td>Parameter $name could not be found in add_event()</td>
-</tr>
 <tr class="error">
 <td>error</td>
 <td>144</td>
@@ -655,7 +669,272 @@
 </tbody>
 </table></div>
 </div>
+<div class="package-contents">
+<a name="application/models/sandcastle/planet_model.php" id="application/models/sandcastle/planet_model.php"></a><h3>
+<i class="icon-file"></i>application/models/sandcastle/planet_model.php<small style="float: right;padding-right: 10px;">6</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>51</td>
+<td>Name of argument $email does not match with the DocBlock's name $userEmail in add_feed()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>51</td>
+<td>Name of argument $feed_url does not match with the DocBlock's name $feedURL in add_feed()</td>
+</tr>
+<tr class="notice">
+<td>notice</td>
+<td>51</td>
+<td>Parameter $userEmail could not be found in add_feed()</td>
+</tr>
+<tr class="notice">
+<td>notice</td>
+<td>51</td>
+<td>Parameter $feedURL could not be found in add_feed()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>83</td>
+<td>Name of argument $feed_url does not match with the DocBlock's name $feedURL in get_feed()</td>
+</tr>
+<tr class="notice">
+<td>notice</td>
+<td>83</td>
+<td>Parameter $feedURL could not be found in get_feed()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
 <div class="package-contents"></div>
+<div class="package-contents">
+<a name="application/views/sandcastle/admin/events.php" id="application/views/sandcastle/admin/events.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/admin/events.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/admin/events.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/admin/feeds.php" id="application/views/sandcastle/admin/feeds.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/admin/feeds.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/admin/feeds.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/admin/index.php" id="application/views/sandcastle/admin/index.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/admin/index.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/admin/index.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/admin/users.php" id="application/views/sandcastle/admin/users.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/admin/users.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/admin/users.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/form/add_event.php" id="application/views/sandcastle/form/add_event.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/form/add_event.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/form/add_event.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/form/add_feed.php" id="application/views/sandcastle/form/add_feed.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/form/add_feed.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/form/add_feed.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/form/add_user.php" id="application/views/sandcastle/form/add_user.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/form/add_user.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/form/add_user.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/form/delete_event.php" id="application/views/sandcastle/form/delete_event.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/form/delete_event.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/form/delete_event.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/form/delete_feed.php" id="application/views/sandcastle/form/delete_feed.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/form/delete_feed.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/form/delete_feed.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/form/delete_user.php" id="application/views/sandcastle/form/delete_user.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/form/delete_user.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/form/delete_user.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/form/edit_user.php" id="application/views/sandcastle/form/edit_user.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/form/edit_user.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/form/edit_user.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/form/sign_in.php" id="application/views/sandcastle/form/sign_in.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/form/sign_in.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/form/sign_in.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="application/views/sandcastle/planet.php" id="application/views/sandcastle/planet.php"></a><h3>
+<i class="icon-file"></i>application/views/sandcastle/planet.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>1</td>
+<td>No page-level DocBlock was found in file application/views/sandcastle/planet.php</td>
+</tr></tbody>
+</table></div>
+</div>
 <div class="package-contents">
 <a name="application/views/welcome_message.php" id="application/views/welcome_message.php"></a><h3>
 <i class="icon-file"></i>application/views/welcome_message.php<small style="float: right;padding-right: 10px;">1</small>
@@ -6788,7 +7067,7 @@
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a2</a> and<br>
-            generated on 2012-06-28T00:35:21+01:00.<br></footer></div>
+            generated on 2012-07-04T20:40:29+01:00.<br></footer></div>
 </div>
 </body>
 </html>

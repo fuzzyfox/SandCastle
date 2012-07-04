@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 <meta charset="utf-8">
-<title>phpDocumentor » \Event_model</title>
+<title>phpDocumentor » \User_model</title>
 <meta name="author" content="Mike van Riel">
 <meta name="description" content="">
 <link href="../css/template.css" rel="stylesheet" media="all">
@@ -61,21 +61,20 @@
 <i class="icon-custom icon-method"></i> Methods</li>
 <li class="method public "><a href="#__construct" title="__construct :: Constructor"><span class="description">Constructor</span><pre>__construct()</pre></a></li>
 <li class="method public inherited"><a href="#__get" title="__get :: __get"><span class="description">__get</span><pre>__get()</pre></a></li>
-<li class="method public "><a href="#add_event" title="add_event :: Add Event"><span class="description">Add Event</span><pre>add_event()</pre></a></li>
-<li class="method public "><a href="#add_tag" title="add_tag :: Add Tag"><span class="description">Add Tag</span><pre>add_tag()</pre></a></li>
-<li class="method public "><a href="#get_event" title="get_event :: Get Event"><span class="description">Get Event</span><pre>get_event()</pre></a></li>
-<li class="method public "><a href="#get_events_between" title="get_events_between :: Get Events Between"><span class="description">Get Events Between</span><pre>get_events_between()</pre></a></li>
-<li class="method public "><a href="#get_tags" title="get_tags :: Get Tags for Event"><span class="description">Get Tags for Event</span><pre>get_tags()</pre></a></li>
-<li class="method public "><a href="#tag_event" title="tag_event :: Tag Event"><span class="description">Tag Event</span><pre>tag_event()</pre></a></li>
+<li class="method public "><a href="#delete" title="delete :: Deletes a user"><span class="description">Deletes a user</span><pre>delete()</pre></a></li>
+<li class="method public "><a href="#get" title="get :: Gets one, or all users from the database"><span class="description">Gets one, or all users from the database</span><pre>get()</pre></a></li>
+<li class="method public "><a href="#get_status" title="get_status :: Gets user status from the database"><span class="description">Gets user status from the database</span><pre>get_status()</pre></a></li>
+<li class="method public "><a href="#insert" title="insert :: Inserts a new user into the database"><span class="description">Inserts a new user into the database</span><pre>insert()</pre></a></li>
+<li class="method public "><a href="#update" title="update :: Updates a users stored data"><span class="description">Updates a users stored data</span><pre>update()</pre></a></li>
+<li class="method public "><a href="#valid_sign_in" title="valid_sign_in :: Checks that a users sign in credentials are valid"><span class="description">Checks that a users sign in credentials are valid</span><pre>valid_sign_in()</pre></a></li>
 </ul>
 </div>
 <div class="span8">
-<a name="%5CEvent_model" id="\Event_model"></a><div href="../classes/Event_model.html" class="element class">
-<p class="short_description">Event Model</p>
+<a name="%5CUser_model" id="\User_model"></a><div href="../classes/User_model.html" class="element class">
+<p class="short_description">User Model</p>
 <div class="details">
-<p class="long_description"><p>Provides the needed functions to make storing and listing upcoming events
-easy as 3.141526... More specifically it deals with the database side of
-things.</p>
+<p class="long_description"><p>Provides the needed functions to make user management a piece of
+cake. More specifically it deals with the database side of things.</p>
 
 <p>When talking about the "database result object" this refers to the
 CodeIgniter database result object, i.e. <code>$query-&gt;result();</code></p></p>
@@ -90,7 +89,7 @@ CodeIgniter database result object, i.e. <code>$query-&gt;result();</code></p></
 </tr>
 <tr>
 <th>category</th>
-<td>Event</td>
+<td>User</td>
 </tr>
 <tr>
 <th>author</th>
@@ -110,7 +109,7 @@ CodeIgniter database result object, i.e. <code>$query-&gt;result();</code></p></
 </tr>
 <tr>
 <th>todo</th>
-<td>Event Features</td>
+<td>User Features</td>
 </tr>
 </table>
 <h3>
@@ -144,128 +143,99 @@ syntax as controllers.</p></p>
 <code></code><p>string</p></div>
 </div></div>
 </div>
-<a name="add_event" id="add_event"></a><div class="element clickable method public add_event" data-toggle="collapse" data-target=".add_event .collapse">
-<h2>Add Event</h2>
-<pre>add_event(string $url, string $name, string $desc, int $sdate, int $fdate, mixed $tags, string $tag_desc) : boolean</pre>
+<a name="delete" id="delete"></a><div class="element clickable method public delete" data-toggle="collapse" data-target=".delete .collapse">
+<h2>Deletes a user</h2>
+<pre>delete(string $user_email) : boolean</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
-<p class="long_description"><p>Adds an event to the database</p></p>
+<p class="long_description"></p>
 <h3>Parameters</h3>
 <div class="subelement argument">
-<h4>$url</h4>
-<code>string</code><p>the url either the event wiki page or website.</p></div>
-<div class="subelement argument">
-<h4>$name</h4>
-<code>string</code><p>name of the event</p></div>
-<div class="subelement argument">
-<h4>$desc</h4>
-<code>string</code><p>a description of the event to be displayed.</p></div>
-<div class="subelement argument">
-<h4>$sdate</h4>
-<code>int</code><p>the start date for the event.</p></div>
-<div class="subelement argument">
-<h4>$fdate</h4>
-<code>int</code><p>the finish date for the event.</p></div>
-<div class="subelement argument">
-<h4>$tags</h4>
-<code>mixed</code><p>either a string for one tag, or array for multiple.</p></div>
-<div class="subelement argument">
-<h4>$tag_desc</h4>
-<code>string</code><p>if prev' is string this is used to</p>
-</div>
+<h4>$user_email</h4>
+<code>string</code><p>The email address of the user to delete</p></div>
 <h3>Returns</h3>
 <div class="subelement response">
 <code>boolean</code>TRUE on success</div>
 </div></div>
 </div>
-<a name="add_tag" id="add_tag"></a><div class="element clickable method public add_tag" data-toggle="collapse" data-target=".add_tag .collapse">
-<h2>Add Tag</h2>
-<pre>add_tag(string $name, string $desc) : boolean</pre>
+<a name="get" id="get"></a><div class="element clickable method public get" data-toggle="collapse" data-target=".get .collapse">
+<h2>Gets one, or all users from the database</h2>
+<pre>get(string $user_email) : mixed</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
-<p class="long_description"><p>Adds a tag into the database. Tags must be lowercase (will be converted
-if not), and unique (a check will be done to avoid collisions).</p></p>
+<p class="long_description"><p>Gets one or all users from the database WITHOUT the password, but with
+some additional information that is worked out from data stored</p></p>
 <h3>Parameters</h3>
 <div class="subelement argument">
-<h4>$name</h4>
-<code>string</code><p>the name of the tag to be displayed (i.e. mozilla)</p>
-</div>
-<div class="subelement argument">
-<h4>$desc</h4>
-<code>string</code><p>a short description of the tag</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>boolean</code>TRUE on success (will return TRUE even on colision as tag is still in the database)</div>
-</div></div>
-</div>
-<a name="get_event" id="get_event"></a><div class="element clickable method public get_event" data-toggle="collapse" data-target=".get_event .collapse">
-<h2>Get Event</h2>
-<pre>get_event(mixed $event_id) : mixed</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"><p>Gets a single event (and assoc' tags) based on the events ID and
-returns a database result object.</p></p>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$event_id</h4>
-<code>mixed</code><p>id of the event to get or NULL for all events</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>mixed</code>a modified database result object on success, otherwise FALSE</div>
-</div></div>
-</div>
-<a name="get_events_between" id="get_events_between"></a><div class="element clickable method public get_events_between" data-toggle="collapse" data-target=".get_events_between .collapse">
-<h2>Get Events Between</h2>
-<pre>get_events_between(int $sdate, int $fdate) : mixed</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"><p>Gets all events within a given date range (to be given as unix
-timestamps), defaults to all events from current time till end of the
-current month</p></p>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$sdate</h4>
-<code>int</code><p>start of date range (defaults to current date)</p>
-</div>
-<div class="subelement argument">
-<h4>$fdate</h4>
-<code>int</code><p>end of date range (defaults to end of current month)</p>
+<h4>$user_email</h4>
+<code>string</code><p>The email of the single user to get [optional]</p>
 </div>
 <h3>Returns</h3>
 <div class="subelement response">
-<code>mixed</code>a modified database result object on success otherwise FASLE</div>
+<code>mixed</code>database result object on success, FALSE on fail</div>
 </div></div>
 </div>
-<a name="get_tags" id="get_tags"></a><div class="element clickable method public get_tags" data-toggle="collapse" data-target=".get_tags .collapse">
-<h2>Get Tags for Event</h2>
-<pre>get_tags(int $event_id) : mixed</pre>
+<a name="get_status" id="get_status"></a><div class="element clickable method public get_status" data-toggle="collapse" data-target=".get_status .collapse">
+<h2>Gets user status from the database</h2>
+<pre>get_status(string $user_email) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
-<p class="long_description"><p>Gets all the tags related to a particular event</p></p>
+<p class="long_description"></p>
 <h3>Parameters</h3>
 <div class="subelement argument">
-<h4>$event_id</h4>
-<code>int</code><p>The id of the event to get the tags for</p></div>
+<h4>$user_email</h4>
+<code>string</code><p>The email of the user to get the status of</p></div>
+</div></div>
+</div>
+<a name="insert" id="insert"></a><div class="element clickable method public insert" data-toggle="collapse" data-target=".insert .collapse">
+<h2>Inserts a new user into the database</h2>
+<pre>insert(\assoc_array $data) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>\assoc_array</code><p>The user data to insert</p></div>
 <h3>Returns</h3>
 <div class="subelement response">
-<code>mixed</code>database result object on success otherwise FALSE</div>
+<code>boolean</code>TRUE on success</div>
 </div></div>
 </div>
-<a name="tag_event" id="tag_event"></a><div class="element clickable method public tag_event" data-toggle="collapse" data-target=".tag_event .collapse">
-<h2>Tag Event</h2>
-<pre>tag_event(mixed $tag, $event_id) </pre>
+<a name="update" id="update"></a><div class="element clickable method public update" data-toggle="collapse" data-target=".update .collapse">
+<h2>Updates a users stored data</h2>
+<pre>update(string $user_email, \assoc_array $data) : boolean</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
-<p class="long_description"><p>Tags an event with a specified tag. Both the tag and event must exist
-in their respective database tables already.</p></p>
+<p class="long_description"></p>
 <h3>Parameters</h3>
 <div class="subelement argument">
-<h4>$tag</h4>
-<code>mixed</code><p>string if single tag, array of strings if multiple</p></div>
+<h4>$user_email</h4>
+<code>string</code><p>The email address of the user to update</p></div>
 <div class="subelement argument">
-<h4>$event_id</h4>
-<code></code>
+<h4>$data</h4>
+<code>\assoc_array</code><p>The new user data</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>TRUE on success</div>
+</div></div>
 </div>
+<a name="valid_sign_in" id="valid_sign_in"></a><div class="element clickable method public valid_sign_in" data-toggle="collapse" data-target=".valid_sign_in .collapse">
+<h2>Checks that a users sign in credentials are valid</h2>
+<pre>valid_sign_in(string $user_email, string $password_hash) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="span8">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$user_email</h4>
+<code>string</code><p>The user email to check for</p></div>
+<div class="subelement argument">
+<h4>$password_hash</h4>
+<code>string</code><p>The hash of the password to check</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>TRUE if valid, FALSE if not</div>
 </div></div>
 </div>
 </div>
