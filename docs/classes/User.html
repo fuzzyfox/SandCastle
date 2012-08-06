@@ -33,10 +33,10 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">980</span></a></li>
+                <span class="label label-info">964</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul><li>todo 
-                <span class="label label-info">8</span>
+                <span class="label label-info">6</span>
 </li></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
                 <span class="label label-info">0</span></a></li>
@@ -60,12 +60,6 @@
 <li class="nav-header">
 <i class="icon-custom icon-method"></i> Methods</li>
 <li class="method public "><a href="#__construct" title="__construct :: Constructor"><span class="description">Constructor</span><pre>__construct()</pre></a></li>
-<li class="method public "><a href="#get_config" title="get_config :: Accessor method for config"><span class="description">Accessor method for config</span><pre>get_config()</pre></a></li>
-<li class="method public "><a href="#get_human_status" title="get_human_status :: Gets a human readable version of a status code"><span class="description">Gets a human readable version of a status code</span><pre>get_human_status()</pre></a></li>
-<li class="method public "><a href="#hash_password" title="hash_password :: Hashes a users password"><span class="description">Hashes a users password</span><pre>hash_password()</pre></a></li>
-<li class="method public "><a href="#is_signed_in" title="is_signed_in :: Checks if a user is signed in"><span class="description">Checks if a user is signed in</span><pre>is_signed_in()</pre></a></li>
-<li class="method public "><a href="#sign_in" title="sign_in :: Signs a user in"><span class="description">Signs a user in</span><pre>sign_in()</pre></a></li>
-<li class="method public "><a href="#sign_out" title="sign_out :: Signs a user out"><span class="description">Signs a user out</span><pre>sign_out()</pre></a></li>
 <li class="nav-header">
 <i class="icon-custom icon-property"></i> Properties</li>
 <li class="nav-header private">» Private</li>
@@ -75,9 +69,12 @@
 </div>
 <div class="span8">
 <a name="%5CUser" id="\User"></a><div href="../classes/User.html" class="element class">
-<p class="short_description">User Class</p>
+<p class="short_description">Planet Class</p>
 <div class="details">
-<p class="long_description"><p>Provides the needed functions to make user management easy.</p></p>
+<p class="long_description"><p>Provides the needed functions to make running a basic planet a piece of
+cake.</p>
+
+<p>Supports RSS 2.0 and ATOM feeds</p></p>
 <table class="table table-bordered">
 <tr>
 <th>package</th>
@@ -89,7 +86,7 @@
 </tr>
 <tr>
 <th>category</th>
-<td>User</td>
+<td>Planet</td>
 </tr>
 <tr>
 <th>author</th>
@@ -109,8 +106,12 @@
 </tr>
 <tr>
 <th>todo</th>
-<td>User Features
-* write testcases</td>
+<td>Planet Features
+* add RSS 1.0 support
+* add caching support for pulled feeds
+* test osort function
+* test class
+* write testcase</td>
 </tr>
 </table>
 <h3>
@@ -121,96 +122,6 @@
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"><p>Gets the CodeIgniter instance and loads the user management
 configuration</p></p></div></div>
-</div>
-<a name="get_config" id="get_config"></a><div class="element clickable method public get_config" data-toggle="collapse" data-target=".get_config .collapse">
-<h2>Accessor method for config</h2>
-<pre>get_config() : object</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"></p>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>object</code>The sandcastle user management config settings</div>
-</div></div>
-</div>
-<a name="get_human_status" id="get_human_status"></a><div class="element clickable method public get_human_status" data-toggle="collapse" data-target=".get_human_status .collapse">
-<h2>Gets a human readable version of a status code</h2>
-<pre>get_human_status(int $status) : string</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"></p>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$status</h4>
-<code>int</code><p>The status code to convert</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>string</code>The human readable version of the status code</div>
-</div></div>
-</div>
-<a name="hash_password" id="hash_password"></a><div class="element clickable method public hash_password" data-toggle="collapse" data-target=".hash_password .collapse">
-<h2>Hashes a users password</h2>
-<pre>hash_password(string $str, string $salt) : string</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"></p>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$str</h4>
-<code>string</code><p>The string to be hashed</p></div>
-<div class="subelement argument">
-<h4>$salt</h4>
-<code>string</code><p>This is a unique salt for this password</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>string</code>The hashed form of the string</div>
-</div></div>
-</div>
-<a name="is_signed_in" id="is_signed_in"></a><div class="element clickable method public is_signed_in" data-toggle="collapse" data-target=".is_signed_in .collapse">
-<h2>Checks if a user is signed in</h2>
-<pre>is_signed_in() : boolean</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"></p>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>boolean</code>TRUE if user signed in</div>
-</div></div>
-</div>
-<a name="sign_in" id="sign_in"></a><div class="element clickable method public sign_in" data-toggle="collapse" data-target=".sign_in .collapse">
-<h2>Signs a user in</h2>
-<pre>sign_in(string $user_email, int $user_status, string $redirect_path) </pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"><p>Sets a session cookie for a user so they stay signed for a set amount
-of time, defined in the CodeIgniter config file
-<code>application/config/config.php</code>. The user will then be redirected to
-the path passed to the function</p></p>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$user_email</h4>
-<code>string</code><p>The user to sign in</p></div>
-<div class="subelement argument">
-<h4>$user_status</h4>
-<code>int</code><p>The status of the user (e.g. 0 = admin (by default)</p>
-</div>
-<div class="subelement argument">
-<h4>$redirect_path</h4>
-<code>string</code><p>The uri to redirect the user to once complete</p></div>
-</div></div>
-</div>
-<a name="sign_out" id="sign_out"></a><div class="element clickable method public sign_out" data-toggle="collapse" data-target=".sign_out .collapse">
-<h2>Signs a user out</h2>
-<pre>sign_out(string $redirect_path) </pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"><p>Destroys the users session cookie and redirects to the path passed to
-the function.</p></p>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$redirect_path</h4>
-<code>string</code><p>The uri to redirect the user to once complete</p></div>
-</div></div>
 </div>
 <h3>
 <i class="icon-custom icon-property"></i> Properties</h3>
@@ -233,7 +144,7 @@ the function.</p></p>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a2</a> and<br>
-            generated on 2012-07-04T20:40:27+01:00.<br></footer></div>
+            generated on 2012-06-28T00:35:20+01:00.<br></footer></div>
 </div>
 </body>
 </html>

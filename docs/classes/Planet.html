@@ -33,10 +33,10 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">980</span></a></li>
+                <span class="label label-info">964</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul><li>todo 
-                <span class="label label-info">8</span>
+                <span class="label label-info">6</span>
 </li></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
                 <span class="label label-info">0</span></a></li>
@@ -61,10 +61,8 @@
 <i class="icon-custom icon-method"></i> Methods</li>
 <li class="method public "><a href="#__construct" title="__construct :: Constructor"><span class="description">Constructor</span><pre>__construct()</pre></a></li>
 <li class="method public "><a href="#get_feed" title="get_feed :: Gets a feed from its source"><span class="description">Gets a feed from its source</span><pre>get_feed()</pre></a></li>
-<li class="method public "><a href="#get_feed_title" title="get_feed_title :: Get the title of a feed"><span class="description">Get the title of a feed</span><pre>get_feed_title()</pre></a></li>
 <li class="method public "><a href="#process_atom" title="process_atom :: Processes an ATOM feed"><span class="description">Processes an ATOM feed</span><pre>process_atom()</pre></a></li>
 <li class="method public "><a href="#reset_instance" title="reset_instance :: Resets current instance of Planet"><span class="description">Resets current instance of Planet</span><pre>reset_instance()</pre></a></li>
-<li class="method public "><a href="#valid_feed" title="valid_feed :: Validates a feed exists and checks if it is a supported version."><span class="description">Validates a feed exists and checks if it is a supported version.</span><pre>valid_feed()</pre></a></li>
 <li class="nav-header private">» Private</li>
 <li class="method private "><a href="#get_simplexml" title="get_simplexml :: Gets the SimpleXMLElement for feed"><span class="description">Gets the SimpleXMLElement for feed</span><pre>get_simplexml()</pre></a></li>
 <li class="method private "><a href="#osort" title="osort :: Sorts an array object based on a specific property in descending order"><span class="description">Sorts an array object based on a specific property in descending order</span><pre>osort()</pre></a></li>
@@ -158,21 +156,6 @@ of urls is passed in.</p>
 <code>mixed</code>feed object sorted by time or FALSE if feed not found or supported</div>
 </div></div>
 </div>
-<a name="get_feed_title" id="get_feed_title"></a><div class="element clickable method public get_feed_title" data-toggle="collapse" data-target=".get_feed_title .collapse">
-<h2>Get the title of a feed</h2>
-<pre>get_feed_title(string $url) : mixed</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"></p>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$url</h4>
-<code>string</code><p>The url of the feed to get the title of</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>mixed</code>Title of feed on success, FALSE if feed is invalid</div>
-</div></div>
-</div>
 <a name="process_atom" id="process_atom"></a><div class="element clickable method public process_atom" data-toggle="collapse" data-target=".process_atom .collapse">
 <h2>Processes an ATOM feed</h2>
 <pre>process_atom(<a href="http://php.net/manual/en/class.simplexmlelement.php">\SimpleXMLElement</a> $feed) : object</pre>
@@ -203,24 +186,9 @@ of urls is passed in.</p>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8"><p class="long_description"></p></div></div>
 </div>
-<a name="valid_feed" id="valid_feed"></a><div class="element clickable method public valid_feed" data-toggle="collapse" data-target=".valid_feed .collapse">
-<h2>Validates a feed exists and checks if it is a supported version.</h2>
-<pre>valid_feed(string $url) : boolean</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"></p>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$url</h4>
-<code>string</code><p>The URL of the feed to check</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>boolean</code>TRUE on success</div>
-</div></div>
-</div>
 <a name="get_simplexml" id="get_simplexml"></a><div class="element clickable method private get_simplexml" data-toggle="collapse" data-target=".get_simplexml .collapse">
 <h2>Gets the SimpleXMLElement for feed</h2>
-<pre>get_simplexml(string $url) : <a href="http://php.net/manual/en/class.simplexmlelement.php">\SimpleXMLElement</a></pre>
+<pre>get_simplexml(string $url) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
 <p class="long_description"><p>Gets the SimpleXMLElement for the feed from the cache OR if cache has
@@ -229,9 +197,6 @@ expired from URL</p></p>
 <div class="subelement argument">
 <h4>$url</h4>
 <code>string</code><p>the url for the feed</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code><a href="http://php.net/manual/en/class.simplexmlelement.php">\SimpleXMLElement</a></code>The SimpleXMLElement for the feed provided</div>
 </div></div>
 </div>
 <a name="osort" id="osort"></a><div class="element clickable method private osort" data-toggle="collapse" data-target=".osort .collapse">
@@ -301,7 +266,7 @@ expired from URL</p></p>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a2</a> and<br>
-            generated on 2012-07-04T20:40:27+01:00.<br></footer></div>
+            generated on 2012-06-28T00:35:20+01:00.<br></footer></div>
 </div>
 </body>
 </html>

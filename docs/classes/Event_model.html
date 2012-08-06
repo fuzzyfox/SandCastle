@@ -33,10 +33,10 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">980</span></a></li>
+                <span class="label label-info">964</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul><li>todo 
-                <span class="label label-info">8</span>
+                <span class="label label-info">6</span>
 </li></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
                 <span class="label label-info">0</span></a></li>
@@ -65,7 +65,6 @@
 <li class="method public "><a href="#add_tag" title="add_tag :: Add Tag"><span class="description">Add Tag</span><pre>add_tag()</pre></a></li>
 <li class="method public "><a href="#get_event" title="get_event :: Get Event"><span class="description">Get Event</span><pre>get_event()</pre></a></li>
 <li class="method public "><a href="#get_events_between" title="get_events_between :: Get Events Between"><span class="description">Get Events Between</span><pre>get_events_between()</pre></a></li>
-<li class="method public "><a href="#get_tags" title="get_tags :: Get Tags for Event"><span class="description">Get Tags for Event</span><pre>get_tags()</pre></a></li>
 <li class="method public "><a href="#tag_event" title="tag_event :: Tag Event"><span class="description">Tag Event</span><pre>tag_event()</pre></a></li>
 </ul>
 </div>
@@ -146,7 +145,7 @@ syntax as controllers.</p></p>
 </div>
 <a name="add_event" id="add_event"></a><div class="element clickable method public add_event" data-toggle="collapse" data-target=".add_event .collapse">
 <h2>Add Event</h2>
-<pre>add_event(string $url, string $name, string $desc, int $sdate, int $fdate, mixed $tags, string $tag_desc) : boolean</pre>
+<pre>add_event(string $url, string $desc, int $sdate, int $fdate, mixed $tags, string $tag_desc) : boolean</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
 <p class="long_description"><p>Adds an event to the database</p></p>
@@ -154,9 +153,6 @@ syntax as controllers.</p></p>
 <div class="subelement argument">
 <h4>$url</h4>
 <code>string</code><p>the url either the event wiki page or website.</p></div>
-<div class="subelement argument">
-<h4>$name</h4>
-<code>string</code><p>name of the event</p></div>
 <div class="subelement argument">
 <h4>$desc</h4>
 <code>string</code><p>a description of the event to be displayed.</p></div>
@@ -168,7 +164,7 @@ syntax as controllers.</p></p>
 <code>int</code><p>the finish date for the event.</p></div>
 <div class="subelement argument">
 <h4>$tags</h4>
-<code>mixed</code><p>either a string for one tag, or array for multiple.</p></div>
+<code>mixed</code><p>either a string for one tag, or assoc_array for multiple.</p></div>
 <div class="subelement argument">
 <h4>$tag_desc</h4>
 <code>string</code><p>if prev' is string this is used to</p>
@@ -200,7 +196,7 @@ if not), and unique (a check will be done to avoid collisions).</p></p>
 </div>
 <a name="get_event" id="get_event"></a><div class="element clickable method public get_event" data-toggle="collapse" data-target=".get_event .collapse">
 <h2>Get Event</h2>
-<pre>get_event(mixed $event_id) : mixed</pre>
+<pre>get_event(int $event_id) : mixed</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="span8">
 <p class="long_description"><p>Gets a single event (and assoc' tags) based on the events ID and
@@ -208,10 +204,10 @@ returns a database result object.</p></p>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$event_id</h4>
-<code>mixed</code><p>id of the event to get or NULL for all events</p></div>
+<code>int</code><p>id of the event to get</p></div>
 <h3>Returns</h3>
 <div class="subelement response">
-<code>mixed</code>a modified database result object on success, otherwise FALSE</div>
+<code>mixed</code>database result object on success, otherwise FALSE</div>
 </div></div>
 </div>
 <a name="get_events_between" id="get_events_between"></a><div class="element clickable method public get_events_between" data-toggle="collapse" data-target=".get_events_between .collapse">
@@ -233,22 +229,7 @@ current month</p></p>
 </div>
 <h3>Returns</h3>
 <div class="subelement response">
-<code>mixed</code>a modified database result object on success otherwise FASLE</div>
-</div></div>
-</div>
-<a name="get_tags" id="get_tags"></a><div class="element clickable method public get_tags" data-toggle="collapse" data-target=".get_tags .collapse">
-<h2>Get Tags for Event</h2>
-<pre>get_tags(int $event_id) : mixed</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="span8">
-<p class="long_description"><p>Gets all the tags related to a particular event</p></p>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$event_id</h4>
-<code>int</code><p>The id of the event to get the tags for</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>mixed</code>database result object on success otherwise FALSE</div>
+<code>mixed</code>database result object on success otherwise FASLE</div>
 </div></div>
 </div>
 <a name="tag_event" id="tag_event"></a><div class="element clickable method public tag_event" data-toggle="collapse" data-target=".tag_event .collapse">
@@ -275,7 +256,7 @@ in their respective database tables already.</p></p>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a2</a> and<br>
-            generated on 2012-07-04T20:40:27+01:00.<br></footer></div>
+            generated on 2012-06-28T00:35:20+01:00.<br></footer></div>
 </div>
 </body>
 </html>
