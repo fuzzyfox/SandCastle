@@ -166,7 +166,7 @@
 			if($cache === FALSE)
 			{
 				// feed not in cache so grab it again
-				$feed = file_get_contents($url);
+				$feed = @file_get_contents($url) or '';
 				// save feed to cache
 				$this->CI->cache->save($this->config->cache_prefix . md5($url), $feed, $this->config->cache_expires);
 				// load SimpleXMLElement
