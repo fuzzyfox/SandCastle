@@ -194,6 +194,7 @@
 			}
 			
 			// get results
+			$this->db->order_by('event.start_date', 'desc');
 			$query = $this->db->get();
 			
 			// check for results before getting tags
