@@ -534,7 +534,7 @@
 			// load the CodeIgniter date helper
 			$this->load->helper('date');
 			// do the comparison
-			return (strtotime($after) > strtotime($before));
+			return (strtotime($after) >= strtotime($before));
 		}
 	}
 	
